@@ -44,13 +44,15 @@ def demo(opt):
               image_names.append(os.path.join(opt.demo, file_name))
     else:
       image_names = [opt.demo]
-    
+    total_time = 0.0 
     for (image_name) in image_names:
-      ret = detector.run(image_name)
+      ret, t = detector.run(image_name)
+      total_time += t
       time_str = ''
       for stat in time_stats:
         time_str = time_str + '{} {:.3f}s |'.format(stat, ret[stat])
       print(time_str)
+    print('avg time: {}s, {}s/{}'.format(total_time/len(image_names), total_time, len(image_names)))
 if __name__ == '__main__':
   opt = opts().init()
   demo(opt)

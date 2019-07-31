@@ -351,7 +351,7 @@ class opts(object):
                 'mean': [0.485, 0.456, 0.406], 'std': [0.229, 0.224, 0.225],
                 'dataset': 'kitti'},
     }
-    class Struct:
+    class Struct(object):
       def __init__(self, entries):
         for k, v in entries.items():
           self.__setattr__(k, v)

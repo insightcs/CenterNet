@@ -30,7 +30,8 @@ def main(opt):
   
   print('Creating model...')
   model = create_model(opt.arch, opt.heads, opt.head_conv)
-  optimizer = torch.optim.Adam(model.parameters(), opt.lr)
+  #optimizer = torch.optim.Adam(model.parameters(), opt.lr)
+  optimizer = torch.optim.SGD(model.parameters(), opt.lr, momentum=0.99)
   start_epoch = 0
   if opt.load_model != '':
     model, optimizer, start_epoch = load_model(
@@ -47,8 +48,7 @@ def main(opt):
       shuffle=False,
       num_workers=1,
       pin_memory=True
-  )
-
+    )
   if opt.test:
     _, preds = trainer.val(0, val_loader)
     val_loader.dataset.run_eval(preds, opt.save_dir)
